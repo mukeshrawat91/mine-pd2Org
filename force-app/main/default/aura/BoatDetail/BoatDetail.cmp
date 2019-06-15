@@ -1,0 +1,62 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+                access="global" description="BoatDetail">
+    
+    <aura:attribute name="boat" type="Boat__c"/>
+    <div class="Record Details">
+        <lightning:card iconName="utility:anchor">
+            
+            <aura:set attribute="Actions">
+                
+                <aura:if isTrue="{!v.Event}">
+                    <lightning:button label="Full Details" onclick="{!c.onFullDetails}" disabled="false" />
+                    <aura:set attribute="else"> 
+                        <lightning:button label="Full Details" onclick="{!c.onFullDetails}" disabled="true" />
+                    </aura:set>
+                </aura:if>
+                
+            </aura:set>
+            
+            <aura:set attribute="title">
+                {!v.boat.Contact__r.Name}'s Boat
+            </aura:set>
+            
+            <lightning:layout horizontalAlign="space" multipleRows="true">
+                <lightning:layoutItem size="6" padding="around-small">
+                    <div class="slds-p-horizontal--small">
+                        <div class="boatproperty">
+                            <span class="label">Boat Name:</span>
+                            <span>{!v.boat.Name}</span>
+                        </div>
+                        <div class="boatproperty">
+                            <span class="label">Type:</span>
+                            <span>{!v.boat.BoatType__r.Name}</span>
+                        </div>
+                        <div class="boatproperty">
+                            <span class="label">Length:</span>
+                            <span>{!v.boat.Length__c} ft</span>
+                        </div>
+                        <div class="boatproperty">
+                            <span class="label">Est. Price:</span>
+                            <span><lightning:formattedNumber value="{!v.boat.Price__c}" style="currency" currencyCode="USD"/>
+                            </span>
+                        </div>
+                        <div class="boatproperty">
+                            <span class="label">Description:</span>
+                            <ui:outputRichText value="{!v.boat.Description__c}" />
+                        </div>
+                    </div>
+                    
+                </lightning:layoutItem>
+                
+                <lightning:layoutItem size="6" padding="around-small">
+                    
+                    <lightning:button variant='neutral' label='Full Details' onclick='{!c.onFullDetails}'/>
+                    
+                    <div class="imageview" style="{!'background-image:url(\'' + v.boat.Picture__c + '\')'}" />
+                </lightning:layoutItem>
+                
+                
+            </lightning:layout>
+        </lightning:card>
+    </div>
+</aura:component>

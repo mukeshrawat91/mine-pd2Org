@@ -1,0 +1,8 @@
+<aura:event type="COMPONENT" description="Event template">
+    <aura:attribute name="item" type="Camping_Item__c"
+                    default="{ 'sobjectType': 'Camping_Item__c',
+                             'Name': '',
+                             'Quantity__c': 0,
+                             'Price__c': 0,
+                             'Packed__c': false }"/>
+</aura:event>

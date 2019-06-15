@@ -1,0 +1,30 @@
+<aura:component controller="CampingListController">
+    <aura:attribute name="items" type="Camping_Item__c[]"/> 
+    <aura:attribute name="newItem" type="Camping_Item__c"
+                    default="{ 'sobjectType': 'Camping_Item__c',
+                             'Name': '',
+                             'Quantity__c': 0,
+                             'Price__c': 0,
+                             'Packed__c': false }"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <aura:handler name="addItem" event="c:addItemEvent"
+        action="{!c.handleAddItem}"/>
+     
+    <lightning:card title="Expenses">
+        <p class="slds-p-horizontal--small">
+            <aura:iteration items="{!v.items}" var="expense">
+                <c:campingListItem item="{!expense}"/>
+            </aura:iteration>
+        </p>
+    </lightning:card>
+    
+    
+    <ol>
+        <li>Bug Spray</li>
+        <li>Bear Repellant</li>
+        <li>Goat Food</li>
+    </ol>
+    
+    <c:campingListForm />
+</aura:component>

@@ -1,0 +1,66 @@
+<aura:component controller="BoatReviews" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+                access="global" >
+    
+    <aura:attribute name="boat" type="Boat__c"/>
+    <aura:attribute name="boatReviews" type="BoatReview__c[]" access="private"/>
+    <aura:attribute name="toshow" type="Boolean"/>
+    
+    <aura:handler name="Init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.boat}" action="{!c.doInit}"/>
+    
+    <aura:method name="refresh" action="{!c.doInit}">
+    </aura:method>
+    
+    
+    <aura:if isTrue="{!v.toshow}">
+        <div class="mainWrap">
+            <ui:scrollerWrapper class="sWrapTest">
+                <aura:iteration items="{!v.boatReviews}" var="BoatReview">
+                    <div class="slds-feed">
+                        <ul class="slds-feed__list">
+                            <li class="slds-feed__item">
+                                <article class="slds-post">
+                                    <header class="slds-post__header slds-media">
+                                        <div class="slds-media__figure">
+                                            <a href="javascript:void(0);" class="slds-avatar slds-avatar_circle slds-avatar_large">
+                                                <img alt="Jason Rodgers" src="{!v.boatReviews.CreatedBy.SmallPhotoUrl}" title="Jason Rodgers avatar" />
+                                            </a>
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                <p><a href="javascript:void(0);" title="Jason Rodgers" onclick="{!c.onUserInfoClick}" data-userid="{!boatReview.CreatedBy.Id}">{!v.BoatReview.CreatedBy.Name}</a> — <a href="javascript:void(0);" title="Design Systems">{!v.BoatReview.CreatedBy.CompanyName}</a></p>
+                                            </div>
+                                            <p class="slds-text-body_small"><a href="javascript:void(0);" title="Click for single-item view of this post" class="slds-text-link_reset">{!v.BoatReview.CreatedDate}</a></p>
+                                        </div>
+                                    </header>
+                                    <div class="slds-post__content slds-text-longform">
+                                        <p>{!v.BoatReview.Comment__c}</p>
+                                    </div>
+                                    <footer class="slds-post__footer">
+                                        <ul class="slds-post__footer-meta-list slds-list_horizontal slds-has-dividers_right slds-text-title">
+                                            <li class="slds-col slds-item slds-m-right_medium">
+                                                <c:FiveStarRating aura:id="FiveStarRating" value="{!v.BoatReview.Rating__c}" readonly="true"/> 
+                                            </li>
+                                        </ul>
+                                    </footer>
+                                </article>
+                            </li>
+                        </ul>
+                    </div>
+                </aura:iteration>
+                
+            </ui:scrollerWrapper>
+        </div>
+        <aura:set attribute="else">
+            <aura:if isTrue="{!v.boatReviews.length==0}">
+                <lightning:layoutItem class="slds-align_absolute-center" flexibility="auto" padding="around-small">
+                    <ui:outputText value="No reviews available" />
+                </lightning:layoutItem>
+            </aura:if>
+        </aura:set>
+    </aura:if> 
+    
+    
+    
+    
+</aura:component>

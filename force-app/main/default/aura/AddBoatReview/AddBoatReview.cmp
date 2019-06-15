@@ -1,0 +1,43 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" >
+    
+    
+    <aura:attribute name="boat" type="Boat__c"  />
+    <aura:attribute name="review" type="BoatReview__c" access="private" />
+    <aura:attribute name="boatReview" type="BoatReview__c" access="private" />
+    <aura:attribute name="recordError" type="String" access="private" />
+    
+    <aura:handler name="onInit" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="boatReviewAdded" type="c:BoatReviewAdded"/>
+    
+    <force:recordData aura:id="service"
+                      layoutType="FULL"
+                      fields="Id,Name,Comment__c,Boat__c"
+                      mode="EDIT"
+                      targetRecord="{!v.review}"
+                      targetFields="{!v.boatReview}"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.onRecordUpdated}"/>
+    
+    <lightning:layout verticalAlign="start" multipleRows="true">
+        
+        <Lightning:layoutItem flexibility="auto" padding="around-small">
+            <lightning:input name="Title" label="Title" value="{!v.boatReview.Name}" />
+        </Lightning:layoutItem>
+        
+        <Lightning:layoutItem flexibility="auto" padding="around-small">
+            <lightning:inputRichText aura:id="description" title="description"
+                                     disabledCategories="FORMAT_FONT"
+                                     value="{!v.boatReview.Comment__c}"/>        
+        </Lightning:layoutItem>
+        
+        <Lightning:layoutItem flexibility="auto" padding="around-small">
+            <c:FiveStarRating aura:id="FiveStarRating" value="{!v.boatReview.Rating__c}" readonly="false"/> 
+        </Lightning:layoutItem>
+        
+        <Lightning:layoutItem flexibility="auto" padding="around-small">
+            <lightning:button iconName="utility:save" onclick="{!c.onSave}" label="Submit"/>
+        </Lightning:layoutItem>
+        
+    </lightning:layout>
+</aura:component>
